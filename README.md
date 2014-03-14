@@ -29,11 +29,11 @@ We will be collecting food price information. We will also keep track of: what f
 We may need to develop some special techniques to deal with inconsistent user input (e.g. determining when different bar codes belong to the same foods). Depending on the direction our project goes, we may also need to figure out a way to predict serving sizes based on some basic information.  
 
 ## Wireframes
-![Login Page](/wireframes/login.jpg)
-![Home Page](/wireframes/home.jpg)
-![Shopping Page](/wireframes/barcode.jpg)
-![Cooking Page](/wireframes/cooking.jpg)
-![Cost Page](/wireframes/cost.jpg)
-![Graph Page](/wireframes/graph.jpg)
+![Login Page](/wireframes/login.png)
+![Home Page](/wireframes/home.png)
+![Shopping Page](/wireframes/barcode.png)
+![Cooking Page](/wireframes/cooking.png)
+![Cost Page](/wireframes/cost.png)
+![Graph Page](/wireframes/graph.png)
 
 
