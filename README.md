@@ -37,3 +37,6 @@ We may need to develop some special techniques to deal with inconsistent user in
 ![Graph Page](/wireframes/graph.png)
 
 
+#COMMENTS BY MING
+* Why do you need to send emails and/or SMSes?
+* Data entry will be interesting.  Not all food items will have PLU numbers or barcodes. Example: a package of chicken drumsticks. What you can do: have a pulldown menu of food items [beef, chicken, pork,....] and have user enter the price.  At least you're normalizing stuff instead of people entering things inconsistently (e.g., "Chick", "chicken", "Chicken", "package of chicken", "drumsticks")
