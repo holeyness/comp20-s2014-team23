@@ -11,15 +11,10 @@ var mongoUri = process.env.MONGOLAB_URI ||
   process.env.MONGOHQ_URL ||
   'mongodb://localhost/nomify';
 
-var users = [
-    { userId: 1, username: 'bob', password: 'secret', email: 'bob@example.com' }
-  , { userId: 2, username: 'joe', password: 'birthday', email: 'joe@example.com' }
-];
-
 function findById(id, fn) {
   console.log("searching by ID");
   mongo.Db.connect(mongoUri, function (err, db) {
-    db.collection(userCollection, function(er, collection) {
+    db.collection(userCollection, function(err, collection) {
       collection.find({"userId":id}).toArray(function(err, results) {
         if (err) return fn(null, null);
 
@@ -64,8 +59,7 @@ passport.deserializeUser(function(id, done) {
 // Use the LocalStrategy within Passport.
 //   Strategies in passport require a `verify` function, which accept
 //   credentials (in this case, a username and password), and invoke a callback
-//   with a user object.  In the real world, this would query a database;
-//   however, in this example we are using a baked-in set of users.
+//   with a user object.
 passport.use(new LocalStrategy(
   function(username, password, done) {
     // asynchronous verification, for effect...
@@ -116,7 +110,6 @@ app.get('/pantry', ensureAuthenticated, function(req, res){
 });
 
 app.get('/login', function(req, res){
-  console.log("login user: " + JSON.stringify(req.user));
   res.render('login.html');
 });
 
@@ -130,7 +123,7 @@ app.get('/login', function(req, res){
 app.post('/login',
   passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }),
   function(req, res) {
-    console.log('you logged in');
+    console.log('Successful login of user: ' + JSON.stringify(req.user));
     res.redirect('/');
   });
 
@@ -150,7 +143,6 @@ app.listen(3000, function() {
 //   the request will proceed.  Otherwise, the user will be redirected to the
 //   login page.
 function ensureAuthenticated(req, res, next) {
-  console.log(req);
   if (req.isAuthenticated()) { return next(); }
   res.redirect('/login')
 }
