@@ -1,3 +1,11 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+  <title>Nomify Login</title>
+  <link rel="stylesheet" type="text/css" media="all" href="login.css">
+</head>
+
 <script type="text/javascript">
 function login()
 {
@@ -7,7 +15,7 @@ function login()
     if (window.XMLHttpRequest)xmlhttp=new XMLHttpRequest(); 
     else xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
     xmlhttp.onreadystatechange=function(){document.getElementById('LoginScreen').innerHTML=xmlhttp.responseText;}
-    xmlhttp.open('GET','login.php?EMail='+email+'&PWord='+pword,true);
+    xmlhttp.open('GET','login.asp?EMail='+email+'&PWord='+pword,true);
     xmlhttp.send();
 }
 function resetPassword()
@@ -35,7 +43,7 @@ function register()
 }
 </script>
 
-
+<body>
 <div id="LoginScreen">
 <h1>Nomify.</h1><br>
 <h2>Please login or register below:</h2><br>
@@ -74,3 +82,4 @@ function register()
     </ul>
     <input type="submit" value="Register"/>
 </form>
+</body>
