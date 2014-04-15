@@ -2,6 +2,7 @@ var express = require('express')
   , passport = require('passport')
   , flash = require('connect-flash')
   , mongo = require('mongodb')
+  , exphbs  = require('express3-handlebars')
   , LocalStrategy = require('passport-local').Strategy;
 
 var userCollection = 'userCollection';
@@ -84,13 +85,15 @@ passport.use(new LocalStrategy(
   }
 ));
 
-
-
-
 var app = express();
 
 // configure Express
 app.configure(function() {
+  app.use(express.static(__dirname + '/views'));
+  app.engine('handlebars', exphbs({defaultLayout: 'main'}));
+  app.engine('html', exphbs())
+  app.set('view engine', 'handlebars');
+
   app.use(express.logger());
   app.use(express.cookieParser());
   app.use(express.bodyParser());
@@ -100,19 +103,21 @@ app.configure(function() {
   // persistent login sessions (recommended).
   app.use(passport.initialize());
   app.use(passport.session());
+  app.use(flash());
 });
 
 
 app.get('/', function(req, res){
-  res.render('index', { user: req.user });
+  res.render('index.html');
 });
 
-app.get('/account', ensureAuthenticated, function(req, res){
-  res.render('account', { user: req.user });
+app.get('/pantry', ensureAuthenticated, function(req, res){
+  res.render('pantry.html');
 });
 
 app.get('/login', function(req, res){
-  res.render('login', { user: req.user, message: req.flash('error') });
+  console.log("login user: " + JSON.stringify(req.user));
+  res.render('login.html');
 });
 
 // POST /login
@@ -145,6 +150,7 @@ app.listen(3000, function() {
 //   the request will proceed.  Otherwise, the user will be redirected to the
 //   login page.
 function ensureAuthenticated(req, res, next) {
+  console.log(req);
   if (req.isAuthenticated()) { return next(); }
   res.redirect('/login')
 }
