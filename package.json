@@ -1,0 +1,23 @@
+{
+  "name": "Nomify",
+  "version": "0.0.0",
+  "description": "## Project Name NOM.ify",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/tuftsdev/comp20-s2014-team23.git"
+  },
+  "author": "Team 23",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tuftsdev/comp20-s2014-team23/issues"
+  },
+  "homepage": "https://github.com/tuftsdev/comp20-s2014-team23",
+  "dependencies": {
+    "express": "^4.0.0",
+    "mongo": "^0.1.0"
+  }
+}
