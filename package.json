@@ -17,7 +17,9 @@
   },
   "homepage": "https://github.com/tuftsdev/comp20-s2014-team23",
   "dependencies": {
-    "express": "^4.0.0",
-    "mongo": "^0.1.0"
+    "express": "^3.5.0",
+    "passport": "^0.2.0",
+    "passport-local": "^1.0.0",
+    "mongodb": "^1.4.0"
   }
 }
