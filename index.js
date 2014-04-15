@@ -1,42 +1,46 @@
 var express = require('express')
   , passport = require('passport')
+  , flash = require('connect-flash')
   , mongo = require('mongodb')
   , LocalStrategy = require('passport-local').Strategy;
 
+var userCollection = 'userCollection';
 
-// var mongoUri = process.env.MONGOLAB_URI ||
-//   process.env.MONGOHQ_URL ||
-//   'mongodb://localhost/nomify';
-
-// mongo.Db.connect(mongoUri, function (err, db) {
-//   db.collection('mydocs', function(er, collection) {
-//     collection.insert({'mykey': 'myvalue'}, {safe: true}, function(er,rs) {
-//     });
-//   });
-// });
+var mongoUri = process.env.MONGOLAB_URI ||
+  process.env.MONGOHQ_URL ||
+  'mongodb://localhost/nomify';
 
 var users = [
-    { id: 1, username: 'bob', password: 'secret', email: 'bob@example.com' }
-  , { id: 2, username: 'joe', password: 'birthday', email: 'joe@example.com' }
+    { userId: 1, username: 'bob', password: 'secret', email: 'bob@example.com' }
+  , { userId: 2, username: 'joe', password: 'birthday', email: 'joe@example.com' }
 ];
 
 function findById(id, fn) {
-  var idx = id - 1;
-  if (users[idx]) {
-    fn(null, users[idx]);
-  } else {
-    fn(new Error('User ' + id + ' does not exist'));
-  }
+  console.log("searching by ID");
+  mongo.Db.connect(mongoUri, function (err, db) {
+    db.collection(userCollection, function(er, collection) {
+      collection.find({"userId":id}).toArray(function(err, results) {
+        if (err) return fn(null, null);
+
+        console.log("FOUND a valid user by user id user id:" + JSON.stringify(results[0]));
+        return fn(null, results[0]);
+      });
+    });
+  });
+
 }
 
 function findByUsername(username, fn) {
-  for (var i = 0, len = users.length; i < len; i++) {
-    var user = users[i];
-    if (user.username === username) {
-      return fn(null, user);
-    }
-  }
-  return fn(null, null);
+  mongo.Db.connect(mongoUri, function (err, db) {
+    db.collection(userCollection, function(er, collection) {
+      collection.find({"username":username}).toArray(function(err, results) {
+        if (err) return fn(null,null);
+
+        console.log("FOUND a valid user by username: " + JSON.stringify(results[0]));
+        return fn(null, results[0]);
+      });
+    });
+  });
 }
 
 
@@ -46,7 +50,7 @@ function findByUsername(username, fn) {
 //   this will be as simple as storing the user ID when serializing, and finding
 //   the user by ID when deserializing.
 passport.serializeUser(function(user, done) {
-  done(null, user.id);
+  done(null, user.userId);
 });
 
 passport.deserializeUser(function(id, done) {
@@ -124,25 +128,6 @@ app.post('/login',
     console.log('you logged in');
     res.redirect('/');
   });
-
-// POST /login
-//   This is an alternative implementation that uses a custom callback to
-//   acheive the same functionality.
-/*
-app.post('/login', function(req, res, next) {
-  passport.authenticate('local', function(err, user, info) {
-    if (err) { return next(err) }
-    if (!user) {
-      req.flash('error', info.message);
-      return res.redirect('/login')
-    }
-    req.logIn(user, function(err) {
-      if (err) { return next(err); }
-      return res.redirect('/users/' + user.username);
-    });
-  })(req, res, next);
-});
-*/
 
 app.get('/logout', function(req, res){
   req.logout();
