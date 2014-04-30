@@ -42,3 +42,15 @@ exports.shopping = function(db){
 		res.render('shopping.html');
 	}
 }
+
+exports.submitMeal = function (db) {
+	return function(req,res) {
+		res.render('cooking.html');
+	}
+}
+
+exports.cooking = function (db) {
+	return function(req,res) {
+		res.render('cooking.html');
+	}
+}
