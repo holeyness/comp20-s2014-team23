@@ -37,7 +37,23 @@ function displayResult()
 }
 
 function getdata(){
-	console.log("get data was run");
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange=function(){
+		if (xmlhttp.readyState == 4){
+			var usernameresponse = JSON.parse(xmlhttp.response);
+			
+		}
+	}
+
+
+
+
+
+
+
+
+
+
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange=function()
   	{
