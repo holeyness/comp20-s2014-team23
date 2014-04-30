@@ -3,16 +3,14 @@ var express = require('express')
   , flash = require('connect-flash')
   , mongo = require('mongodb')
   , routes = require('./routes')
+  , user = require('./models/user')
   , exphbs  = require('express3-handlebars')
   , LocalStrategy = require('passport-local').Strategy;
 
-var db = require('monk')('localhost/nomify');
+var mongoUri = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/nomify';
+var db = require('monk')(mongoUri);
 
 var userCollection = 'userCollection';
-
-var mongoUri = process.env.MONGOLAB_URI ||
-  process.env.MONGOHQ_URL ||
-  'mongodb://localhost/nomify';
 
 
 // Passport session setup.
@@ -21,7 +19,7 @@ var mongoUri = process.env.MONGOLAB_URI ||
 //   this will be as simple as storing the user ID when serializing, and finding
 //   the user by ID when deserializing.
 passport.serializeUser(function(user, done) {
-  done(null, user.userId);
+  done(null, user.Id);
 });
 
 passport.deserializeUser(function(id, done) {
@@ -35,8 +33,11 @@ passport.deserializeUser(function(id, done) {
 //   Strategies in passport require a `verify` function, which accept
 //   credentials (in this case, a username and password), and invoke a callback
 //   with a user object.
-passport.use(new LocalStrategy(
-  function(username, password, done) {
+passport.use(new LocalStrategy({
+    usernameField: 'EMail',
+    passwordField: 'PWord'
+  },
+  function(userNameOrEmail, password, done) {
     // asynchronous verification, for effect...
     process.nextTick(function () {
 
@@ -44,7 +45,8 @@ passport.use(new LocalStrategy(
       // username, or the password is not correct, set the user to `false` to
       // indicate failure and set a flash message.  Otherwise, return the
       // authenticated `user`.
-      user.findByUsername(db, username, function(err, user) {
+      user.findByUsernameOrEmail(db, userNameOrEmail, function(err, user) {
+        console.log("found" + JSON.stringify(user))
         if (err) { return done(err); }
         if (!user) { return done(null, false, { message: 'Unknown user ' + username }); }
         if (user.password != password) { return done(null, false, { message: 'Invalid password' }); }
@@ -121,6 +123,7 @@ app.listen(3000, function() {
 });
 
 app.get('/pantry', ensureAuthenticated, routes.pantry(db));
+app.post('/submit', ensureAuthenticated, routes.submit(db));
 
 
 // Simple route middleware to ensure user is authenticated.
