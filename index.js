@@ -85,6 +85,10 @@ app.get('/login', function(req, res){
   res.render('login.html');
 });
 
+app.get('/shopping', function(req, res){
+  res.render('shopping.html');
+});
+
 // POST /login
 //   Use passport.authenticate() as route middleware to authenticate the
 //   request.  If authentication fails, the user will be redirected back to the
