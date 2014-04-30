@@ -5,33 +5,81 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">  
     <!-- Bootstrap -->  
     <link href="../bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" media="screen">  
-  </head>  
-  
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script>
+var myusername;
+var result;
 
-  <body>  
+function doMath() {
+	var table=document.getElementById("myTable");
+	var total = 0;
+	var servings = 0;
+	for (var i = 0; i < result.length; i++){
+		servings = table.rows[i].cells[1].innerHTML.getElementById('servings_input').value;
+		total += servings / result[i].quantity * results[i].price;
+	}
+    document.getElementById('total_input').value = total;
+}
+
+function getdata(){
+	var xmlhttp0 = new XMLHttpRequest();
+	xmlhttp0.onreadystatechange=function(){
+		if (xmlhttp0.readyState == 4){
+			var usernameresponse = JSON.parse(xmlhttp0.response);
+			myusername = usernameresponse.name;
+			getfood();
+		}
+	}
+	xmlhttp0.open("GET", "/user", true);
+	xmlhttp0.send();
+}
+
+function getfood(){
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange=function()
+  	{
+  if (xmlhttp.readyState==4)
+    {
+		var table=document.getElementById("myTable");
+		result = JSON.parse(xmlhttp.response);
+		for (var i = 0; i < result.length; i++){
+			var row=table.insertRow(0);
+			var cell1=row.insertCell(0);
+			var cell2=row.insertCell(1);
+			var k = document.createElement("input");
+			k.setAttribute('type',"text");
+			k.setAttribute('id',"servings_input");
+			k.setAttribute('onBlur',"doMath();");
+
+			cell1.innerHTML=result[i].food;
+			cell2.innerHTML=k;
+		}
+    }
+  }
+
+	xmlhttp.open("GET", "/pantry?username=" + myusername, true);
+	xmlhttp.send();
+}
+
+
+</script>
+</head>
+<body onload="getdata()">
+
 <h1> Calculate Your Meal Cost </h1>
 
-<table class="table table-bordered">  
+<table id="myTable" class="table table-bordered">  
     <thead>  
         <tr>  
           <th>Item</th>  
           <th>Servings</th>  
-          <th></th>
         </tr>  
     </thead>  
-    <tbody>  
-        <tr>  
-          <td><h3>Chicken</h3></td>  
-          <td><input type="text" id="servings" name="servings"/>
-          <td><button type="button" class="btn btn-success btn-lg">Add</button></td>  
-    	</tr>  
- 		<tr>  
-          <td><h3>Pasta</h3></td>  
-          <td><input type="text" id="servings" name="servings"/>
-          <td><button type="button" class="btn btn-success btn-lg">Add</button></td>  
-   	 	</tr>  
+    <tbody>   
     </tbody>  
 </table> 
-<h2> Total cost of your meal: </h2>
+<div>Total: <input type="text" id="total_input" value="0" readonly="true" /></div>
+
+
 </body>
 </HTML>
