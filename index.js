@@ -65,6 +65,15 @@ app.get('/logout', function(req, res){
   res.redirect('/');
 });
 
+app.post('/register', function(req, res) {
+  var firstname = req.query.FirstName;
+  var lastName = req.query.LastName;
+  var password = req.query.PWord;
+  var email = req.query.EMail;
+
+  res.send(200);
+});
+
 app.listen(3000, function() {
   console.log('Express server listening on port 3000');
 });
