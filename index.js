@@ -85,7 +85,7 @@ app.get('/login', function(req, res){
   res.render('login.html');
 });
 
-app.get('/shopping', function(req, res){
+app.get('/shopping', ensureAuthenticated, function(req, res){
   res.render('shopping.html');
 });
 
