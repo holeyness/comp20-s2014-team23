@@ -46,10 +46,15 @@ function getfood(){
 			var row=table.insertRow(0);
 			var cell1=row.insertCell(0);
 			var cell2=row.insertCell(1);
+			var f = document.createElement("form");
+			f.setAttribute('method',"post");
+			f.setAttribute('action',"submit.php");
+			
 			var k = document.createElement("input");
 			k.setAttribute('type',"text");
 			k.setAttribute('id',"servings_input");
 			k.setAttribute('onBlur',"doMath();");
+			f.appendChild(k);
 
 			cell1.innerHTML=result[i].food;
 			cell2.innerHTML=k;
