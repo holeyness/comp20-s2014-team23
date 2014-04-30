@@ -1,14 +1,12 @@
 
 exports.pantry = function (db){
 	return function (req, res){
-		var username = req.user;
+		var username = req.body.username;
 		var collection = db.get('userfood');
 
 		console.log(username + "accessed pantry");
 
 		collection.find({"username" : username},{}, function(e,docs){
-			res.writeHead(200, {'Content-Type': 'text/html'});
-
 			res.json(docs);
 		})
 	}
@@ -17,7 +15,7 @@ exports.pantry = function (db){
 exports.submit = function(db){
 	return function(req,res){
 
-		var username = req.body.user;
+		var username = req.body.username;
 		var food = req.body.food;
 		var price = req.body.price;
 		var quantity = req.body.quantity;
@@ -35,5 +33,11 @@ exports.submit = function(db){
 		});
 		res.writeHead(200, {'Content-Type': 'text/html'});
 		res.end('we have food');
+	}
+}
+
+exports.shopping = function(db){
+	return function(req,res){
+		res.render('shopping.html');
 	}
 }
