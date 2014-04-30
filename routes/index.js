@@ -37,3 +37,9 @@ exports.submit = function(db){
 		res.end('we have food');
 	}
 }
+
+exports.shopping = function(db){
+	return function(req,res){
+		res.render('shopping.html');
+	}
+}
