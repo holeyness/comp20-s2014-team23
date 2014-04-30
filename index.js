@@ -14,34 +14,6 @@ var mongoUri = process.env.MONGOLAB_URI ||
   process.env.MONGOHQ_URL ||
   'mongodb://localhost/nomify';
 
-function findById(id, fn) {
-  console.log("searching by ID");
-  mongo.Db.connect(mongoUri, function (err, db) {
-    db.collection(userCollection, function(err, collection) {
-      collection.find({"userId":id}).toArray(function(err, results) {
-        if (err) return fn(null, null);
-
-        console.log("FOUND a valid user by user id user id:" + JSON.stringify(results[0]));
-        return fn(null, results[0]);
-      });
-    });
-  });
-
-}
-
-function findByUsername(username, fn) {
-  mongo.Db.connect(mongoUri, function (err, db) {
-    db.collection(userCollection, function(er, collection) {
-      collection.find({"username":username}).toArray(function(err, results) {
-        if (err) return fn(null,null);
-
-        console.log("FOUND a valid user by username: " + JSON.stringify(results[0]));
-        return fn(null, results[0]);
-      });
-    });
-  });
-}
-
 
 // Passport session setup.
 //   To support persistent login sessions, Passport needs to be able to
@@ -53,7 +25,7 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(id, done) {
-  findById(id, function (err, user) {
+  user.findById(db, id, function (err, user) {
     done(err, user);
   });
 });
@@ -72,7 +44,7 @@ passport.use(new LocalStrategy(
       // username, or the password is not correct, set the user to `false` to
       // indicate failure and set a flash message.  Otherwise, return the
       // authenticated `user`.
-      findByUsername(username, function(err, user) {
+      user.findByUsername(db, username, function(err, user) {
         if (err) { return done(err); }
         if (!user) { return done(null, false, { message: 'Unknown user ' + username }); }
         if (user.password != password) { return done(null, false, { message: 'Invalid password' }); }

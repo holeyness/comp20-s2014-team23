@@ -16,7 +16,7 @@ function login()
     if (window.XMLHttpRequest)xmlhttp=new XMLHttpRequest();
     else xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
     xmlhttp.onreadystatechange=function(){document.getElementById('LoginScreen').innerHTML=xmlhttp.responseText;}
-    xmlhttp.open('POST','login.html?EMail='+email+'&PWord='+pword,true);
+    xmlhttp.open('POST','login?EMail='+email+'&PWord='+pword,true);
     xmlhttp.send();
 }
 function resetPassword()
@@ -26,7 +26,7 @@ function resetPassword()
     if (window.XMLHttpRequest)xmlhttp=new XMLHttpRequest();
     else xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
     xmlhttp.onreadystatechange=function(){document.getElementById('LoginScreen').innerHTML=xmlhttp.responseText;}
-    xmlhttp.open('POST','reset.html?EMail='+email,true);
+    xmlhttp.open('POST','reset?EMail='+email,true);
     xmlhttp.send();
 }
 function register()
