@@ -15,7 +15,11 @@ function login()
     var xmlhttp;
     if (window.XMLHttpRequest)xmlhttp=new XMLHttpRequest();
     else xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
-    xmlhttp.onreadystatechange=function(){document.getElementById('LoginScreen').innerHTML=xmlhttp.responseText;}
+    xmlhttp.onreadystatechange = function() {
+        if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+            window.location = "/"; // Janky, but will work for now. (because the server redirects / here if you aren't logged in. ie. if login fails)
+        }
+    };
     xmlhttp.open('POST','login?EMail='+email+'&PWord='+pword,true);
     xmlhttp.send();
 }

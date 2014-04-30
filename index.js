@@ -59,7 +59,7 @@ var app = express();
 
 // configure Express
 app.configure(function() {
-  app.use(express.static(__dirname + '/views'));
+  app.use(express.static(__dirname + '/static'));
   app.engine('handlebars', exphbs({defaultLayout: 'main'}));
   app.engine('html', exphbs())
   app.set('view engine', 'handlebars');
@@ -76,12 +76,12 @@ app.configure(function() {
   app.use(flash());
 });
 
-
-app.get('/', function(req, res){
+app.get('/', ensureAuthenticated, function(req, res){
   res.render('index.html');
 });
 
 app.get('/login', function(req, res){
+  if (req.isAuthenticated()) res.redirect('/');
   res.render('login.html');
 });
 
@@ -101,7 +101,7 @@ app.post('/login',
   function(req, res) {
     console.log('Successful login of user: ' + JSON.stringify(req.user));
     res.redirect('/');
-  });
+});
 
 app.get('/logout', function(req, res){
   req.logout();
