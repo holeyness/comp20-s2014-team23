@@ -23,6 +23,7 @@
     "mongodb": "^1.4.0",
     "connect-flash": "^0.1.1",
     "handlebars": "^2.0.0-alpha.2",
-    "express3-handlebars": "^0.5.0"
+    "express3-handlebars": "^0.5.0",
+    "monk": "*"
   }
 }

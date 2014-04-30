@@ -2,8 +2,11 @@ var express = require('express')
   , passport = require('passport')
   , flash = require('connect-flash')
   , mongo = require('mongodb')
+  , routes = require('./routes')
   , exphbs  = require('express3-handlebars')
   , LocalStrategy = require('passport-local').Strategy;
+
+var db = require('monk')('localhost/nomify');
 
 var userCollection = 'userCollection';
 
@@ -135,6 +138,8 @@ app.get('/logout', function(req, res){
 app.listen(3000, function() {
   console.log('Express server listening on port 3000');
 });
+
+app.get('/pantry', ensureAuthenticated, routes.pantry(db));
 
 
 // Simple route middleware to ensure user is authenticated.
