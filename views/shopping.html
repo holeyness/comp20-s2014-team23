@@ -1,0 +1,93 @@
+<HTML>
+<HEAD>
+  <TITLE>Add to Pantry</TITLE>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+  <link rel="stylesheet" type="text/css" media="all" href="shopping.css">
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<SCRIPT Language="JavaScript">
+
+function delrow1()
+{
+document.getElementById("myTable").deleteRow(1);
+}
+
+function displayResult()
+{
+	var table=document.getElementById("myTable");
+	var row=table.insertRow(1);
+	var cell1=row.insertCell(0);
+	var cell2=row.insertCell(1);
+	var cell3=row.insertCell(2);
+
+	var item = document.getElementById('item').value;
+	var servings = document.getElementById('servings').value;
+	var cost = document.getElementById('cost').value;
+
+	cell1.innerHTML=item;
+	cell2.innerHTML=servings;
+	cell3.innerHTML="$"+cost;
+
+
+	$.post(
+ 	 "/submit",
+  	{ username: "bob", food: item, price: cost, quantity: servings },
+  	function(data) {
+ 	 }
+	);
+}
+
+function getdata(){
+	console.log("get data was run");
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange=function()
+  	{
+  if (xmlhttp.readyState==4)
+    {
+		var table=document.getElementById("myTable");
+		result = JSON.parse(xmlhttp.response);
+		for (var i = 0; i < result.length; i++){
+			var row=table.insertRow(1);
+			var cell1=row.insertCell(0);
+			var cell2=row.insertCell(1);
+			var cell3=row.insertCell(2);
+
+
+			cell1.innerHTML=result[i].food;
+			cell2.innerHTML=result[i].quantity;
+			cell3.innerHTML = "$"+result[i].price;
+		}
+    }
+  }
+	xmlhttp.open("GET", "/pantry?username=bob", true);
+	xmlhttp.send();
+}
+</SCRIPT>
+</HEAD>
+<body onload="getdata()">
+<div class="shoppingtable" >
+
+<h1>Add Items to My Pantry</h1>
+
+<form name="create">
+<h3>
+Item:<input type="text" id="item" /><br/>
+Servings:<input type="text" id="servings" name="servings" /><br/>
+Cost: $<input type="text" id="cost" name="cost" /><br/>
+</form>
+
+<button type="button" onClick="displayResult()">Add Item</button>
+<button type="button" onClick="delrow1()">Delete Most Recent Item</button>
+</h3>
+
+<br><br>
+<table id="myTable" border="1">
+  <tr>
+    <td>Item</td>
+    <td>Servings</td>
+    <td>Cost</td>
+  </tr>
+</table>
+<br>
+
+</BODY>
+</HTML>
