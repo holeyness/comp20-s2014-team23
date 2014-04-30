@@ -46,9 +46,8 @@ passport.use(new LocalStrategy({
       // indicate failure and set a flash message.  Otherwise, return the
       // authenticated `user`.
       user.findByUsernameOrEmail(db, userNameOrEmail, function(err, user) {
-        console.log("found" + JSON.stringify(user))
         if (err) { return done(err); }
-        if (!user) { return done(null, false, { message: 'Unknown user ' + username }); }
+        if (!user) { return done(null, false, { message: 'Unknown user ' + userNameOrEmail }); }
         if (user.password != password) { return done(null, false, { message: 'Invalid password' }); }
         return done(null, user);
       })
@@ -80,10 +79,6 @@ app.configure(function() {
 
 app.get('/', function(req, res){
   res.render('index.html');
-});
-
-app.get('/pantry', ensureAuthenticated, function(req, res){
-  res.render('pantry.html');
 });
 
 app.get('/login', function(req, res){
