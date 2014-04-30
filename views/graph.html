@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+  <title>Graph</title>
+  <script src="../Chart.js-master/Chart.js"></script>
+  <script>
+  function graph()
+	{  
+		var ctx = document.getElementById("foodGraph").getContext("2d");
+		var myNewChart = new Chart(ctx).Line(data);
+
+		var data = {
+			labels : ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+			
+			datasets : [
+				//breakfast
+					{
+					fillColor: "#59a69e",
+					strokeColor: "#59a69e",
+					pointColor: "#59a69e",
+					pointStrokeColor: "#59a69e",
+					data : [3, 4, 2, 5, 3]
+
+				},
+				//lunch
+				{
+					fillColor: "#4e74b1",
+					strokeColor: "#4e74b1",
+					pointColor: "#4e74b1",
+					pointStrokeColor: "#4e74b1",
+					data : [4, 5, 6, 5, 8, 3]
+				},
+				//dinner
+				{
+					fillColor: "#6b7794",
+					strokeColor: "#6b7794",
+					pointColor: "#6b7794",
+					pointStrokeColor: "#6b7794",
+					data : [10, 12, 6, 7, 3, 9]
+				}
+			]
+		}
+	}
+
+  </script>
+  <link rel="stylesheet" type="text/css" media="all" href="graph.css">
+</head>
+
+<body onload="graph()">
+	<div id="graph_div">
+		<canvas id="foodGraph" width="400" height="400"></canvas>
+	</div>
+
+</body> 
+
+</html>
