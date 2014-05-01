@@ -1,3 +1,8 @@
+var Meal = require('../models/meal');
+var User = require('../models/user').User;
+
+var mealCollection = "mealCollection";
+var historyCollection = "historyCollection";
 
 exports.pantry = function (db){
 	return function (req, res){
@@ -20,6 +25,7 @@ exports.submit = function(db){
 		var food = req.body.food;
 		var price = req.body.price;
 		var quantity = req.body.quantity;
+		var servingCost = double(price)/double(quantity);
 
 		var collection = db.get('userfood');
 
@@ -27,8 +33,8 @@ exports.submit = function(db){
 			"username" : username,
 			"food": food,
 			"price": price,
-			"quantity": quantity
-
+			"quantity": quantity,
+			"servingCost": servingCost
 		});
 		res.writeHead(200, {'Content-Type': 'text/html'});
 		res.end('we have food');
@@ -60,8 +66,36 @@ exports.delete = function(db){
 
 exports.submitMeal = function (db) {
 	return function(req,res) {
-		res.render('cooking.html');
+		console.log(req.body)
+		var ingredients = JSON.parse(req.body.ingredients);
+		var mealName = req.body.name;
+
+		var m = new Meal(db, ingredients, mealName, req.user);
+
+		m.computeCost(function(cost) {
+			console.log("Meal costs: " + cost);
+		});
+
+		saveMeal(db, m);
+
+		res.send(200);
 	}
+}
+
+function saveMeal(db, meal) {
+	collection = db.get(mealCollection);
+	collection.insert({
+		"username":meal.cook.name,
+		"ingredients":meal.ingredients,
+		"name":meal.name
+	}, function(err, doc) {
+		if (err) console.error(err);
+	});
+}
+
+// Cost can change over time, so save it here.
+function updateMealHistory(db, user, meal, cost) {
+
 }
 
 exports.cooking = function (db) {

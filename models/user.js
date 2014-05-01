@@ -11,6 +11,8 @@ function User(userName, userId, email, password) {
   this.password = password;
 }
 
+exports.User = User;
+
 // db is the mongo db returned by mongo.Db.connect()
 exports.findById = function(db, id, fn) {
   console.log("searching by ID");
@@ -21,7 +23,7 @@ exports.findById = function(db, id, fn) {
       return fn(null, null);
     }
 
-    foundUser = new User(result.username, result.userId, result.email);
+    foundUser = new User(result.username, result.userId, result.email, result.password);
     return fn(null, foundUser);
   });
 }

@@ -17,3 +17,12 @@
 
 ###GET
 **Result:** returns register.html
+
+## /cooking
+
+###POST
+**Data (url encoded of course):** "ingredients={"chicken":2, "rice":3}&name="Chicken with Rice"  
+**Result:** 200 if successfully processed  
+
+###GET
+**Result:** cooking.html

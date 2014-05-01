@@ -4,6 +4,7 @@ var express = require('express')
   , mongo = require('mongodb')
   , routes = require('./routes')
   , user = require('./models/user')
+  , Meal = require('./models/meal')
   , exphbs  = require('express3-handlebars')
   , LocalStrategy = require('passport-local').Strategy;
 

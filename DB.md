@@ -14,3 +14,16 @@
   }
 ```
 
+
+**Collection**: "mealCollection"
+**Example Document**:
+```json
+{
+    "_id":ObjectId("..."),
+    "username": "bob",
+    "name": "Chicken and Rice",
+    "ingredients": {
+        "chicken": 2, // ingredient : number of servings
+        "rice": 3
+    }
+}
