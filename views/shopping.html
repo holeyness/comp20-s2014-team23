@@ -69,6 +69,12 @@ function getfood(){
     {
 		var table=document.getElementById("myTable");
 		result = JSON.parse(xmlhttp.response);
+
+		var rowCount = table.rows.length;
+		for (var x=rowCount-1; x>0; x--) {
+  			table.deleteRow(x);
+		}
+
 		for (var i = 0; i < result.length; i++){
 			var row=table.insertRow(1);
 			var cell1=row.insertCell(0);

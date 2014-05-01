@@ -40,8 +40,6 @@ exports.submit = function(db){
 				collection.update({ $and: [ {username: thisuser }, { food: thisfood } ] }, {$inc: {quantity: thisquantity}});
 			}
 
-
-
 			if (booltest == false){
 				collection.insert({
 					"username" : thisuser,
