@@ -47,7 +47,7 @@ exports.submit = function(db){
 					"price": price,
 					"quantity": thisquantity,
 					"servingCost": servingCost
-				});	
+				});
 			}
 		});
 		console.log("FUUUUUCKME");
@@ -95,7 +95,7 @@ exports.cooking = function (db) {
 exports.submitMeal = function (db) {
 	return function(req,res) {
 		console.log(req.body)
-		var ingredients = JSON.parse(req.body.ingredients);
+		var ingredients = req.body.ingredients;
 		var mealName = req.body.name;
 
 		var m = new Meal(db, ingredients, mealName, req.user);
@@ -108,6 +108,16 @@ exports.submitMeal = function (db) {
 		saveMeal(db, m);
 
 		res.send(200);
+	}
+}
+
+exports.getMeals = function(db) {
+	return function(req, res) {
+		collection = db.get(mealCollection);
+		collection.find({username:req.user.name})
+		.success(function(docs) {
+			res.json(docs);
+		})
 	}
 }
 
