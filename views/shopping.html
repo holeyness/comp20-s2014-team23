@@ -6,9 +6,21 @@
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <SCRIPT Language="JavaScript">
 var myusername;
+
+var lastitem;
+var lastservings;
+
 function delrow1()
 {
-document.getElementById("myTable").deleteRow(1);
+	document.getElementById("myTable").deleteRow(1);
+	console.log("delete last");
+	console.log(myusername);
+	console.log(lastitem);
+
+	lastservings = -lastservings;
+	console.log(lastservings);
+	
+	$.post("/delete", {username: myusername, food:lastitem, quantity: lastservings}, function(data){});
 }
 
 function displayResult()
@@ -22,6 +34,9 @@ function displayResult()
 	var item = document.getElementById('item').value;
 	var servings = document.getElementById('servings').value;
 	var cost = document.getElementById('cost').value;
+
+	lastitem = item;
+	lastservings = servings;
 
 	cell1.innerHTML=item;
 	cell2.innerHTML=servings;
