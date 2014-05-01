@@ -12,24 +12,20 @@ var lastservings;
 
 function delrow1()
 {
-	document.getElementById("myTable").deleteRow(1);
-	console.log("delete last");
-	console.log(myusername);
-	console.log(lastitem);
-
 	lastservings = -lastservings;
-	console.log(lastservings);
-	
-	$.post("/delete", {username: myusername, food:lastitem, quantity: lastservings}, function(data){});
+
+	$.post("/delete", {username: myusername, food:lastitem, quantity: lastservings}, function(data){
+		getdata();
+	});
 }
 
 function displayResult()
 {
-	var table=document.getElementById("myTable");
-	var row=table.insertRow(1);
-	var cell1=row.insertCell(0);
-	var cell2=row.insertCell(1);
-	var cell3=row.insertCell(2);
+	//var table=document.getElementById("myTable");
+	//var row=table.insertRow(1);
+	//var cell1=row.insertCell(0);
+	//var cell2=row.insertCell(1);
+	//var cell3=row.insertCell(2);
 
 	var item = document.getElementById('item').value;
 	var servings = document.getElementById('servings').value;
@@ -38,15 +34,16 @@ function displayResult()
 	lastitem = item;
 	lastservings = servings;
 
-	cell1.innerHTML=item;
-	cell2.innerHTML=servings;
-	cell3.innerHTML="$"+cost;
+	//cell1.innerHTML=item;
+	//cell2.innerHTML=servings;
+	//cell3.innerHTML="$"+cost;
 
 
 	$.post(
  	 "/submit",
   	{ username: myusername, food: item, price: cost, quantity: servings },
   	function(data) {
+  		getdata();
  	 }
 	);
 }
@@ -72,6 +69,12 @@ function getfood(){
     {
 		var table=document.getElementById("myTable");
 		result = JSON.parse(xmlhttp.response);
+
+		var rowCount = table.rows.length;
+		for (var x=rowCount-1; x>0; x--) {
+  			table.deleteRow(x);
+		}
+
 		for (var i = 0; i < result.length; i++){
 			var row=table.insertRow(1);
 			var cell1=row.insertCell(0);
@@ -104,7 +107,7 @@ Total Cost: $<input type="text" id="cost" name="cost" /><br/>
 </form>
 
 <button type="button" onClick="displayResult()">Add Item</button>
-<button type="button" onClick="delrow1()">Delete Most Recent Item</button>
+<button type="button" onClick="delrow1()">Undo</button>
 </h3>
 
 <br><br>
