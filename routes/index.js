@@ -22,21 +22,37 @@ exports.pantry = function (db){
 exports.submit = function(db){
 	return function(req,res){
 
-		var username = req.body.username;
-		var food = req.body.food;
+		var thisuser = req.body.username;
+		var thisfood = req.body.food;
 		var price = parseInt(req.body.price);
-		var quantity = parseInt(req.body.quantity);
-		var servingCost = price/quantity;
+		var thisquantity = parseInt(req.body.quantity);
+		var servingCost = price/thisquantity;
 
 		var collection = db.get('userfood');
 
-		collection.insert({
-			"username" : username,
-			"food": food,
-			"price": price,
-			"quantity": quantity,
-			"servingCost": servingCost
+		//	what if it exists
+
+		var booltest = false;
+
+		collection.find({ $and: [ {username: thisuser }, { food: thisfood } ] },{}, function(e,docs){
+			if (!(typeof docs[0] === 'undefined')){
+				booltest = true;
+				collection.update({ $and: [ {username: thisuser }, { food: thisfood } ] }, {$inc: {quantity: thisquantity}});
+			}
+
+			if (booltest == false){
+				collection.insert({
+					"username" : thisuser,
+					"food": thisfood,
+					"price": price,
+					"quantity": thisquantity,
+					"servingCost": servingCost
+				});	
+			}
 		});
+		console.log("FUUUUUCKME");
+		console.log(booltest);
+
 		res.writeHead(200, {'Content-Type': 'text/html'});
 		res.end('we have food');
 	}
@@ -57,9 +73,17 @@ exports.delete = function(db){
 		var collection = db.get('userfood');
 
 		collection.update({ $and: [ {username: thisuser }, { food: thisfood } ] }, {$inc: {quantity: thisquantity}});
+
+		//if its 0
+		collection.find({ $and: [ {username: thisuser }, { food: thisfood } ] },{}, function(e,docs){
+			var aquantity = docs[0].quantity;
+			if (aquantity == 0 ){
+				collection.remove({ $and: [ {username: thisuser }, { food: thisfood } ] });
+			}
+		});
 		res.writeHead(200, {'Content-Type:' : 'text/html'});
 		res.end('less food :(');
-		}
+	}
 }
 
 exports.cooking = function (db) {

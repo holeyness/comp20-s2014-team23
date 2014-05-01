@@ -2,7 +2,7 @@
 body {
 	margin: 0px 0px 0px 0px;
 	padding: 0px 0px 0px 0px;
-	font-family: verdana, arial, helvetica, sans-serif;
+	font-family: 'Josefin Sans', sans-serif;
 	color: #ccc;
 	background-image: url(cart.jpg); 
 	background-position: no-repeat center center fixed;
@@ -12,6 +12,7 @@ body {
 	background-size: cover;
 
 	}
+/*
 a {
 	text-decoration: none;
 	font-weight: bold;
@@ -40,61 +41,68 @@ p {
 	margin-top: 20px;
 	margin-bottom: 10px; 
 	}
-
+*/
 /* weird ie5win bug: all line-height to font-size ratios must agree or box gets pushed around. 
 UPDATE: this has turned out to be very rare. my current recommendation is IGNORE this warning. 
 at the moment i'm leaving it in only in case the issue turns up again. possibly the original bug 
 in march 2001 was caused by an unusual combination of factors, although this solved it at the time.*/
 
 h1 {
-	font-size: 24px;
+	font-size: 72px;
 	line-height: 44px;
-	font-weight: bold;
-	margin-top: 0;
-	margin-bottom: 0;
-	margin-left: 20px;
+	font-weight: 700;
 	color: #ffffff;
+	text-align: center;
+
 	}
 h2 {
 	font-size: 18px;
 	line-height: 40px;
-	font-weight: bold;
+	font-weight: 600;
 	margin-top: 0;
 	margin-bottom: 0;
+	opacity: 1;
 	}
 h3 {
 	font-size: 16px;
 	line-height: 22px;
-	font-weight: bold;
+	font-weight: 400;
 	margin-top: 0;
 	margin-bottom: 0;
+	opacity: 1;
 	}
+/*
 img {
 	border: 0;
-	}
+	}*/
 .nowrap {
 	white-space: nowrap;
 	font-size: 10px;
 	font-weight: bold;
 	margin-top: 0;
 	margin-bottom: 0;
-/* must be combined with nobr in html for ie5win */
+/*must be combined with nobr in html for ie5win */
 	}
-.tiny {
-	font-size: 9px;
-	line-height: 16px;
-	margin-top: 15px;
-	margin-bottom: 5px; 
+
+/*.tiny {
+ 	font-size: 9px;
+ 	line-height: 16px;
+ 	margin-top: 15px;
+ 	margin-bottom: 5px; 
 	}
+*/
+
+#LoginScreen{
+	inline
+}
+
 #SignIn {
-	float: left;
 	padding: 10px;
-	margin: 20px;
-	margin-left: auto;
-	margin-right: auto;
 	background: #ffffff;
-	border: 5px solid #ccc;
-	width: 300px; /* ie5win fudge begins */
+	margin-left: 200px;
+	margin-right: 200px;
+	opacity: 0.75;
+	width: 300px; /* ie5win fudge begins*/
 	voice-family: "\"}\"";
 	voice-family:inherit;
 	width: 270px;
@@ -103,22 +111,23 @@ html>body #SignIn {
 	width: 270px; /* ie5win fudge ends */
 	}
 #SignUp {
-	float: left;
 	padding: 10px;
-	margin: 20px;
 	background: #ffffff;
-	border: 5px solid #ccc;
-	width: 300px; /* ie5win fudge begins */
+	margin-left: 200px;
+	margin-right: 200px;
+	opacity: 0.75;
+	width: 300px; /* ie5win fudge begins*/
 	voice-family: "\"}\"";
 	voice-family:inherit;
 	width: 270px;
 	}
+
 html>body #SignUp {
-	width: 270px; /* ie5win fudge ends */
+	width: 270px; /* ie5win fudge ends*/
 	}
 pre {
 	font-size: 12px;
 	line-height: 22px;
 	margin-top: 20px;
 	margin-bottom: 10px; 
-	}
+	}*/
