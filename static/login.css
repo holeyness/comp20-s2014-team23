@@ -3,7 +3,6 @@ body {
 	margin: 0px 0px 0px 0px;
 	padding: 0px 0px 0px 0px;
 	font-family: 'Josefin Sans', sans-serif;
-	color: #ccc;
 	background-image: url(cart.jpg); 
 	background-position: no-repeat center center fixed;
 	-webkit-background-size: cover;
@@ -12,23 +11,23 @@ body {
 	background-size: cover;
 
 	}
-/*
+
 a {
 	text-decoration: none;
-	font-weight: bold;
-	color:  #ccc;
-	outline: none;
+	}
+a:link{
+	color: #ffffff;
 	}
 a:visited {
-	color:  #ccc;
+	color:  #ffffff;
 	}
 a:active {
 	color:  #ccc;
 	}
 a:hover {
-	color: #ccc;
-	text-decoration: underline;
-	}
+	color: #ffffff;
+}
+/*
 .ahem {
 	display: none;
 	}
@@ -51,9 +50,7 @@ h1 {
 	font-size: 72px;
 	line-height: 44px;
 	font-weight: 700;
-	color: #ffffff;
 	text-align: center;
-
 	}
 h2 {
 	font-size: 18px;
@@ -93,7 +90,8 @@ img {
 */
 
 #LoginScreen{
-	inline
+	margin: auto; 
+	text-align: center;
 }
 
 #SignIn {
@@ -106,9 +104,10 @@ img {
 	voice-family: "\"}\"";
 	voice-family:inherit;
 	width: 270px;
+	float: left;
 	}
 html>body #SignIn {
-	width: 270px; /* ie5win fudge ends */
+	width: 270px; /* ie5win fudge ends */  
 	}
 #SignUp {
 	padding: 10px;
@@ -120,6 +119,7 @@ html>body #SignIn {
 	voice-family: "\"}\"";
 	voice-family:inherit;
 	width: 270px;
+	float: left; 
 	}
 
 html>body #SignUp {
