@@ -4,6 +4,7 @@ var express = require('express')
   , mongo = require('mongodb')
   , routes = require('./routes')
   , user = require('./models/user')
+  , Meal = require('./models/meal')
   , exphbs  = require('express3-handlebars')
   , LocalStrategy = require('passport-local').Strategy;
 
@@ -129,7 +130,8 @@ app.get('/pantry', ensureAuthenticated, routes.pantry(db));
 app.post('/submit', ensureAuthenticated, routes.submit(db));
 app.post('/cooking', ensureAuthenticated, routes.submitMeal(db));
 app.get('/cooking', ensureAuthenticated, routes.cooking(db));
-
+app.get('/history', ensureAuthenticated, routes.getHistory(db));
+app.post('/delete', routes.delete(db));
 
 
 // Simple route middleware to ensure user is authenticated.
