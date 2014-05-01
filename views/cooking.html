@@ -46,10 +46,15 @@ function getfood(){
 			var row=table.insertRow(0);
 			var cell1=row.insertCell(0);
 			var cell2=row.insertCell(1);
+			var f = document.createElement("form");
+			f.setAttribute('method',"post");
+			f.setAttribute('action',"submit.php");
+			
 			var k = document.createElement("input");
 			k.setAttribute('type',"text");
 			k.setAttribute('id',"servings_input");
 			k.setAttribute('onBlur',"doMath();");
+			f.appendChild(k);
 
 			cell1.innerHTML=result[i].food;
 			cell2.innerHTML=k;
@@ -61,6 +66,17 @@ function getfood(){
 	xmlhttp.send();
 }
 
+function add_meal(){
+    var mealName = document.getElementById('meal_name').value;
+    var mealCost = document.getElementById('total_input').value;
+    
+    $.post(
+ 	 "/submit",
+  	{ username: myusername, meal: mealName, mealTotal: mealCost },
+  	function(data) {
+ 	 }
+	); 
+}
 
 </script>
 </head>
@@ -79,6 +95,11 @@ function getfood(){
     </tbody>  
 </table> 
 <div>Total: <input type="text" id="total_input" value="0" readonly="true" /></div>
+
+
+<div>Meal Name: <input type="text" id="meal_name" onBlur="add_meal()" /></div>
+
+<a href="graph.html" class="btn btn-info btn-lg active" >I'm Done!</a>
 
 
 </body>
