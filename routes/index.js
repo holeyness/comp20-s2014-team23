@@ -40,8 +40,8 @@ exports.submit = function(db){
 				var newprice = docs[0].servingCost;
 				newprice = (newprice + servingCost)/2;
 
-				collection.update({ $and: [ {username: thisuser }, { food: thisfood } ] }, 
-					{	
+				collection.update({ $and: [ {username: thisuser }, { food: thisfood } ] },
+					{
 
 						$inc: {quantity: thisquantity, price: thisprice},
 						$set: {servingCost: newprice}
@@ -128,12 +128,18 @@ exports.getMeals = function(db) {
 
 function saveMeal(db, meal) {
 	collection = db.get(mealCollection);
-	collection.insert({
-		"username":meal.cook.name,
-		"ingredients":meal.ingredients,
-		"name":meal.name
-	}, function(err, doc) {
-		if (err) console.error(err);
+
+	collection.find({"name":meal.name})
+	.success(function(docs) {
+		if (docs.length === 0) {
+			collection.insert({
+				"username":meal.cook.name,
+				"ingredients":meal.ingredients,
+				"name":meal.name
+			}, function(err, doc) {
+				if (err) console.error(err);
+			});
+		}
 	});
 }
 

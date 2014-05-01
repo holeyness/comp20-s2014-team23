@@ -31,6 +31,17 @@ function getdata(){
 	}
 	xmlhttp0.open("GET", "/user", true);
 	xmlhttp0.send();
+
+	$.get('/meals', function(data) {
+		var list = $('#current-meal-dropdown');
+		list.change(function(el) {
+			changedMealDropdown(el);
+		});
+		data.forEach(function(el) {
+			var newOpt = $("<option/>", {"data-_id":el._id, "data-ingredients":JSON.stringify(el.ingredients), text:el.name});
+			newOpt.appendTo(list);
+		})
+	});
 }
 
 function getfood(){
@@ -91,12 +102,40 @@ function add_meal(){
 	);
 }
 
+function cookMeal() {
+	var selected;
+	$("#current-meal-dropdown").children().each(function(idx, el) {
+		if ($(el).prop('selected') == true) {
+			selected = $(el);
+		}
+	});
+	var ings = selected.data("ingredients");
+	$.post('/cooking', {name: selected.val(), ingredients:ings}, function() {
+		window.location = "graph";
+	})
+}
+
+function changedMealDropdown(sel) {
+	var m = $("#current-meal-dropdown").val();
+	$("#cook-meal-button").text("Cook some " + m + "!")
+}
+
 </script>
 </head>
 <body onload="getdata()">
 
-<div>Meal Name: <input type="text" id="meal_name"/></div>
+<h3>Cook Something</h3>
+<div>
+<select id="current-meal-dropdown" onchange="changedMealDropdown(this)">
+</select>
+</div>
+<br>
+<a id="cook-meal-button" class="btn btn-info btn-lg active" onclick="cookMeal()">Cook a meal!</a>
 
+<h3>Try Something New!</h3>
+
+<div>Meal Name: <input type="text" id="meal_name"/></div>
+<br>
 <table id="myTable" class="table table-bordered">
     <thead>
         <tr>
@@ -112,7 +151,7 @@ function add_meal(){
 <br><br>
 
 <br>
-<a class="btn btn-info btn-lg active" onclick="add_meal()">I'm Done!</a>
+<a class="btn btn-info btn-lg active" onclick="add_meal()">Add new meal</a>
 
 
 </body>
