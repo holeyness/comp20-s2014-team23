@@ -24,9 +24,9 @@ exports.submit = function(db){
 
 		var username = req.body.username;
 		var food = req.body.food;
-		var price = req.body.price;
-		var quantity = req.body.quantity;
-		var servingCost = double(price)/double(quantity);
+		var price = parseInt(req.body.price);
+		var quantity = parseInt(req.body.quantity);
+		var servingCost = price/quantity;
 
 		var collection = db.get('userfood');
 
@@ -50,16 +50,13 @@ exports.shopping = function(db){
 
 exports.delete = function(db){
 	return function(req,res){
-		var username = req.body.username
-		var food = req.body.food;
-		var quantity = req.body.quantity;
+		var thisuser = req.body.username;
+		var thisfood = req.body.food;
+		var thisquantity = parseInt(req.body.quantity);
+
 		var collection = db.get('userfood');
 
-		db.collection.update(
-   			{ "username" : username , "food" : food },
-  			{ $inc : { "quantity" : quantity } },
- 			{ multi: false }
-		);
+		collection.update({ $and: [ {username: thisuser }, { food: thisfood } ] }, {$inc: {quantity: thisquantity}});
 		res.writeHead(200, {'Content-Type:' : 'text/html'});
 		res.end('less food :(');
 		}
