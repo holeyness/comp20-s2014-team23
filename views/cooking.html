@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Calculate Your Meal Cost</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meal Plan</title>
+     <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <link href='http://fonts.googleapis.com/css?family=Josefin+Sans:300,400,600,700' rel='stylesheet' type='text/css'>
     <!-- Bootstrap -->
     <link href="../static/bootstrap.min.css" rel="stylesheet" media="screen">
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <link href="../static/cooking.css" rel="stylesheet" media="screen">
 <script>
 var myusername;
 var result;
@@ -123,6 +125,7 @@ function changedMealDropdown(sel) {
 </script>
 </head>
 <body onload="getdata()">
+<h1><a href="home.html">Nomify.</a></h1>
 
 <h3>Cook Something</h3>
 <div>
@@ -153,6 +156,6 @@ function changedMealDropdown(sel) {
 <br>
 <a class="btn btn-info btn-lg active" onclick="add_meal()">Add new meal</a>
 
-
+ <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 </body>
 </HTML>

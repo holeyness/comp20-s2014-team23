@@ -1,0 +1,26 @@
+body{
+	font-family: 'Josefin Sans', sans-serif;
+	background-color: #f47f76;
+}
+a {
+	text-decoration: none;
+	}
+a:link{
+	color: #ffffff;
+	}
+a:visited {
+	color:  #ffffff;
+	}
+a:active {
+	color:  #ccc;
+	}
+a:hover {
+	color: #ffffff;
+	text-decoration: none;
+}
+
+h1{
+	font-size: 72px;
+	text-align: center;
+	font-weight: 700;
+}
