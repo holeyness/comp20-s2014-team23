@@ -125,36 +125,43 @@ function changedMealDropdown(sel) {
 </script>
 </head>
 <body onload="getdata()">
+
 <h1><a href="/">Nomify.</a></h1>
 
 <h3>Cook Something</h3>
 <div>
 <select id="current-meal-dropdown" onchange="changedMealDropdown(this)">
 </select>
+
+<h1><a href="home.html">Nomify.</a></h1>
+<div id="options">
+	<h3>Tried and True.</h3>
+		<div>
+			<select id="current-meal-dropdown" onchange="changedMealDropdown(this)">
+			</select>
+		</div>
+	<br>
+	<a id="cook-meal-button" class="btn btn-info btn-lg active" onclick="cookMeal()">Cook a past meal!</a>
+
+	<h3>Try Something New!</h3>
+
+		<div>Meal Name: <input type="text" id="meal_name"/></div>
+		<br>
+		<table id="myTable" class="table table-bordered">
+		    <thead>
+		        <tr>
+		          <th>Item</th>
+		          <th>Servings</th>
+		        </tr>
+		    </thead>
+		    <tbody>
+		    </tbody>
+		</table>
+		<div>Total cost of meal: <input type="text" id="total_input" value="0" readonly="true" /></div>
+
+	<br>
+	<a class="btn btn-info btn-lg active" onclick="add_meal()">Add a new meal</a>
 </div>
-<br>
-<a id="cook-meal-button" class="btn btn-info btn-lg active" onclick="cookMeal()">Cook a meal!</a>
-
-<h3>Try Something New!</h3>
-
-<div>Meal Name: <input type="text" id="meal_name"/></div>
-<br>
-<table id="myTable" class="table table-bordered">
-    <thead>
-        <tr>
-          <th>Item</th>
-          <th>Servings</th>
-        </tr>
-    </thead>
-    <tbody>
-    </tbody>
-</table>
-<div>Total cost of meal: <input type="text" id="total_input" value="0" readonly="true" /></div>
-
-<br><br>
-
-<br>
-<a class="btn btn-info btn-lg active" onclick="add_meal()">Add new meal</a>
 
  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 </body>
