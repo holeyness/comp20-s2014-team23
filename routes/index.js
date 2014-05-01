@@ -1,5 +1,6 @@
 var Meal = require('../models/meal');
 var User = require('../models/user').User;
+var moment = require('moment');
 
 var mealCollection = "mealCollection";
 var historyCollection = "historyCollection";
@@ -64,6 +65,12 @@ exports.delete = function(db){
 		}
 }
 
+exports.cooking = function (db) {
+	return function(req,res) {
+		res.render('cooking.html');
+	}
+}
+
 exports.submitMeal = function (db) {
 	return function(req,res) {
 		console.log(req.body)
@@ -74,6 +81,7 @@ exports.submitMeal = function (db) {
 
 		m.computeCost(function(cost) {
 			console.log("Meal costs: " + cost);
+			updateMealHistory(db, m, cost);
 		});
 
 		saveMeal(db, m);
@@ -94,12 +102,55 @@ function saveMeal(db, meal) {
 }
 
 // Cost can change over time, so save it here.
-function updateMealHistory(db, user, meal, cost) {
+function updateMealHistory(db, meal, cost) {
+	collection = db.get(historyCollection);
 
+	var newMeal = {
+		"date":new Date().toJSON(),
+		"meal": "b", // b, l, or d
+		"mealName": meal.name,
+		"cost": cost
+	};
+
+	collection.find({"username":meal.cook.name})
+	.success(function(docs) {
+		console.log(docs)
+		console.log(docs.length)
+		if (docs.length === 0) {
+			collection.insert({
+				"username":meal.cook.name,
+		    "history":[]
+			});
+		}
+
+		collection.update(
+			{"username":meal.cook.name},
+	    {$push : {"history":newMeal}}
+		);
+	});
 }
 
-exports.cooking = function (db) {
+exports.getHistory = function(db) {
 	return function(req,res) {
-		res.render('cooking.html');
+		var numDays = req.body.numDays || 7;
+
+		if (numDays < 0) numDays * -1;
+		collection = db.get(historyCollection);
+		collection.findOne({"username":req.user.name}).success(function(docs) {
+			// The history array has the oldest elements at the front. We want our results the other way around.
+			history = docs.history.reverse();
+
+			var result = [];
+			var limit = moment().subtract(numDays, 'days');
+			for (var i = 0; i < history.length; i++) {
+				if (moment(history[i].date) > limit) {
+					result.push(history[i]);
+				}
+			}
+
+			res.json({"history":result});
+		}).error(function(err) {
+			res.send(500);
+		});
 	}
 }

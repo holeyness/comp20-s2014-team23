@@ -27,3 +27,22 @@
         "rice": 3
     }
 }
+```
+
+***Collection***: "historyCollection"
+**Example Document**:
+```json
+{
+    "_id":ObjectId("..."),
+    "username":"bob",
+    "history":[
+        {
+            "date":new Date().toJSON(), // ISO-8601 format
+            "meal": "b", // b, l, or d
+            "mealName": "Capn Crunch"
+            "cost": 3.50
+        },
+        ...
+    ]
+}
+```

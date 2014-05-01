@@ -31,7 +31,7 @@ Meal.prototype.computeCost = function(callback) {
     docs.forEach(function(el, idx, arr) {
       totalCost += computeFoodCost(el, ingredientToServings[el.food]);
     });
-    callback(totalCost);
+    callback(+(totalCost.toFixed(2))); // Round the number to 2 decimal places and make it a number, since this is a cost.
   })
   .error(function(err) {
     console.error("Error computing meal cost: " + err);

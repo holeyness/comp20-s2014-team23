@@ -130,6 +130,7 @@ app.get('/pantry', ensureAuthenticated, routes.pantry(db));
 app.post('/submit', ensureAuthenticated, routes.submit(db));
 app.post('/cooking', ensureAuthenticated, routes.submitMeal(db));
 app.get('/cooking', ensureAuthenticated, routes.cooking(db));
+app.get('/history', ensureAuthenticated, routes.getHistory(db));
 
 
 
