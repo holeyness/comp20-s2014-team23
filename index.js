@@ -79,7 +79,7 @@ app.configure(function() {
 });
 
 app.get('/', ensureAuthenticated, function(req, res){
-  res.render('index.html');
+  res.render('home.html');
 });
 
 app.get('/login', function(req, res){
