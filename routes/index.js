@@ -151,3 +151,9 @@ exports.getHistory = function(db) {
 		});
 	}
 }
+
+exports.graph = function(db) {
+	return function(req,res) {
+		return res.render('graph.html');
+	}
+}

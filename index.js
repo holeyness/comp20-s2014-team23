@@ -1,5 +1,6 @@
 var express = require('express')
   , passport = require('passport')
+  , path = require('path')
   , flash = require('connect-flash')
   , mongo = require('mongodb')
   , routes = require('./routes')
@@ -60,7 +61,7 @@ var app = express();
 
 // configure Express
 app.configure(function() {
-  app.use(express.static(__dirname + '/static'));
+  app.use('/static', express.static(__dirname + '/static'));
   app.engine('handlebars', exphbs({defaultLayout: 'main'}));
   app.engine('html', exphbs())
   app.set('view engine', 'handlebars');
@@ -130,7 +131,8 @@ app.get('/pantry', ensureAuthenticated, routes.pantry(db));
 app.post('/submit', ensureAuthenticated, routes.submit(db));
 app.post('/cooking', ensureAuthenticated, routes.submitMeal(db));
 app.get('/cooking', ensureAuthenticated, routes.cooking(db));
-app.get('/history', ensureAuthenticated, routes.getHistory(db));
+app.get('/history', ensureAuthenticated, routes.getHistory(db)); // api route to get graph data
+app.get('/graph', ensureAuthenticated, routes.graph(db));
 app.post('/delete', routes.delete(db));
 
 

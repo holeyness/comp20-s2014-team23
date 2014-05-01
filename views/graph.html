@@ -4,61 +4,87 @@
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
   <title>Graph</title>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-  <script src="../Chart.js-master/Chart.js"></script>
+
+  <!-- Load css for c3 basic styles -->
+  <link rel="stylesheet" type="text/css" href="../static/c3.css">
+  <!-- Load d3.js and c3.js -->
+  <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+  <script src="../static/c3.min.js"></script>
+  <script src="../static/moment.min.js"></script>
+
   <script>
-  function graph()
-	{
+    // var breakfast = ['Breakfast', 3, 4, 2, 5, 3, 1, 3];
+    // var lunch = ['Lunch', 4, 5, 6, 5, 8, 3, 4];
+    // var dinner = ['Dinner', 10, 12, 6, 7, 3, 9, 8];
+    var breakfast = ['Breakfast'];
+    var lunch = ['Lunch'];
+    var dinner = ['Dinner'];
+    var chart;
+
+  	function graph() {
 		var DEBUG = true;
-		var ctx = document.getElementById("foodGraph").getContext("2d");
 
-		if (DEBUG) {
+		chart = c3.generate({
+			bindto: "#graph_div",
+		    data: {
+		        columns: [
+		        	breakfast, lunch, dinner
+		        ],
+		        type: 'spline'
+		    },
+		    axis: {
+		        x: {
+		            type: 'categorized',
+		            categories: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+		        },
+		        y: {
+    	            tick: {
+		                format: d3.format("$")
+		            }
+		        }
+		    }
+		});
 
-			var data = {
-				labels : ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-
-				datasets : [
-					//breakfast
-						{
-						fillColor: "rgba(89, 166, 158, 0.1)",
-						strokeColor: "rgba(89, 166, 158, 1)",
-						pointColor: "rgba(89, 166, 158, 1)",
-						pointStrokeColor: "rgba(89, 166, 158, 1)",
-						data : [3, 4, 2, 5, 3, 1, 3]
-
-					},
-					//lunch
-					{
-						fillColor: "rgba(78, 116, 177, 0.1)",
-						strokeColor: "rgba(78, 116, 177, 1)",
-						pointColor: "rgba(78, 116, 177, 1)",
-						pointStrokeColor: "rgba(78, 116, 177, 1)",
-						data : [4, 5, 6, 5, 8, 3, 4]
-					},
-					//dinner
-					{
-						fillColor: "rgba(107, 119, 148, 0.1)",
-						strokeColor: "rgba(107, 119, 148, 1)",
-						pointColor: "rgba(107, 119, 148, 1)",
-						pointStrokeColor: "rgba(107, 119, 148, 1)",
-						data : [10, 12, 6, 7, 3, 9, 8]
-					}
-				]
+		$.get("/history", function(data) {
+			// Fill arrays so that all days display even if we're missing data for them.
+			for (var i = 0; i < 7; i++) {
+				breakfast.push(0);
+				lunch.push(0);
+				dinner.push(0);
 			}
 
-			var myNewChart = new Chart(ctx).Line(data);
-		}
-		else {
-		}
+			var h = data.history;
+			var now = moment();
+			for (var i = 0; i < h.length; i++) {
+				var m = h[i];
+				var idx = now.diff(moment(h.date), 'days') + 1;// first index is series title
+				if (m.meal == "b") {
+					breakfast[idx] += m.cost;
+				}
+				else if (meal == "l") {
+					lunch[idx] += m.cost;
+				}
+				else {
+					dinner[idx] += m.cost;
+				}
+			}
+
+			chart.load({
+				columns: [
+					breakfast, lunch, dinner
+				]
+			});
+		});
+
 	}
+
 
   </script>
   <link rel="stylesheet" type="text/css" media="all" href="../static/graph.css">
 </head>
 
 <body onload="graph()">
-	<div id="graph_div">
-		<canvas id="foodGraph" width="400" height="400"></canvas>
-	</div>
+	<div id="graph_div"></div>
 
 </body>
 
