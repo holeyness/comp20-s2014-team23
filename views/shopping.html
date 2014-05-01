@@ -1,10 +1,12 @@
-<HTML>
-<HEAD>
-  <TITLE>Add to Pantry</TITLE>
-  <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
-  <link rel="stylesheet" type="text/css" media="all" href="../static/shopping.css">
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-<SCRIPT Language="JavaScript">
+<!DOCTYPE html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <title>Pantry</title>
+    <link href='http://fonts.googleapis.com/css?family=Josefin+Sans:300,400,600,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" media="all" href="../static/shopping.css">
+    <link rel= "stylesheet" href= "../static/bootstrap.css"  type= "text/css"/>
+
+<script Language="JavaScript">
 var myusername;
 
 var lastitem;
@@ -92,33 +94,32 @@ function getfood(){
 	xmlhttp.open("GET", "/pantry?username=" + myusername, true);
 	xmlhttp.send();
 }
-</SCRIPT>
-</HEAD>
+</script>
+</head>
 <body onload="getdata()">
-<div class="shoppingtable" >
+   <h1><a href="home.html">Nomify.</a></h1>	
+   <div class="shoppingtable" >
+	<table id="myTable" border="1">
+	  <tr>
+	    <th>Item</td>
+	    <th>Servings</td>
+	    <th>Cost</td>
+	  </tr>
+	  <tr>
+	  	<td>Candy Corn</td>
+	  	<td>1</td>
+	  	<td>$4</td>
+	</table>
+	<form name="create">
+	<h3>
+	Item:<input type="text" id="item" name ="item"/><br/>
+	Servings:<input type="text" id="servings" name="servings" /><br/>
+	Total Cost: $<input type="text" id="cost" name="cost" /><br/>
+	</form>
 
-<h1>Add Items to My Pantry</h1>
-
-<form name="create">
-<h3>
-Item:<input type="text" id="item" name ="item"/><br/>
-Servings:<input type="text" id="servings" name="servings" /><br/>
-Total Cost: $<input type="text" id="cost" name="cost" /><br/>
-</form>
-
-<button type="button" onClick="displayResult()">Add Item</button>
-<button type="button" onClick="delrow1()">Undo</button>
-</h3>
-
-<br><br>
-<table id="myTable" border="1">
-  <tr>
-    <td>Item</td>
-    <td>Servings</td>
-    <td>Cost</td>
-  </tr>
-</table>
-<br>
-
-</BODY>
-</HTML>
+	<button type="button" onClick="displayResult()">Add Item</button>
+	<button type="button" onClick="delrow1()">Undo</button>
+	</h3>
+	 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+</body>
+</html>
