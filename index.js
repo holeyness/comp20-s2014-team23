@@ -79,7 +79,7 @@ app.configure(function() {
 });
 
 app.get('/', ensureAuthenticated, function(req, res){
-  res.render('index.html');
+  res.render('home.html');
 });
 
 app.get('/login', function(req, res){
@@ -114,16 +114,40 @@ app.get('/logout', function(req, res){
   res.redirect('/');
 });
 
+String.prototype.hashCode = function() {
+  var hash = 0, i, chr, len;
+  if (this.length == 0) return hash;
+  for (i = 0, len = this.length; i < len; i++) {
+    chr   = this.charCodeAt(i);
+    hash  = ((hash << 5) - hash) + chr;
+    hash |= 0; // Convert to 32bit integer
+  }
+  return hash;
+};
+
 app.post('/register', function(req, res) {
-  var firstname = req.query.FirstName;
+  var firstName = req.query.FirstName;
   var lastName = req.query.LastName;
   var password = req.query.PWord;
   var email = req.query.EMail;
 
+  // TODO: username must be unique so this needs to check that
+  var c = db.get(userCollection);
+  c.insert({
+    "name":{
+      "first":firstName,
+      "last":lastName
+    },
+    "username":firstName+lastName,
+    "email":email,
+    "password":password,
+    "userId": (firstName+lastName).hashCode() // bad idea, but just want it to work for now. username needs to be unique anyways...
+  });
+
   res.send(200);
 });
 
-app.listen(3000, function() {
+app.listen(process.env.PORT || 3000, function() {
   console.log('Express server listening on port 3000');
 });
 

@@ -57,11 +57,11 @@
 			var now = moment();
 			for (var i = 0; i < h.length; i++) {
 				var m = h[i];
-				var idx = now.diff(moment(h.date), 'days') + 1;// first index is series title
+				var idx = now.diff(moment(h[i].date), 'days') + 1;// first index is series title
 				if (m.meal == "b") {
 					breakfast[idx] += m.cost;
 				}
-				else if (meal == "l") {
+				else if (m.meal == "l") {
 					lunch[idx] += m.cost;
 				}
 				else {
