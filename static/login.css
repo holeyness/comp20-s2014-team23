@@ -1,9 +1,16 @@
+
 body {
 	margin: 0px 0px 0px 0px;
 	padding: 0px 0px 0px 0px;
 	font-family: verdana, arial, helvetica, sans-serif;
 	color: #ccc;
-	background-color: #93b572;
+	background-image: url(cart.jpg); 
+	background-position: no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+
 	}
 a {
 	text-decoration: none;
@@ -34,7 +41,10 @@ p {
 	margin-bottom: 10px; 
 	}
 
-/* weird ie5win bug: all line-height to font-size ratios must agree or box gets pushed around. UPDATE: this has turned out to be very rare. my current recommendation is IGNORE this warning. at the moment i'm leaving it in only in case the issue turns up again. possibly the original bug in march 2001 was caused by an unusual combination of factors, although this solved it at the time.*/
+/* weird ie5win bug: all line-height to font-size ratios must agree or box gets pushed around. 
+UPDATE: this has turned out to be very rare. my current recommendation is IGNORE this warning. 
+at the moment i'm leaving it in only in case the issue turns up again. possibly the original bug 
+in march 2001 was caused by an unusual combination of factors, although this solved it at the time.*/
 
 h1 {
 	font-size: 24px;
@@ -43,6 +53,7 @@ h1 {
 	margin-top: 0;
 	margin-bottom: 0;
 	margin-left: 20px;
+	color: #ffffff;
 	}
 h2 {
 	font-size: 18px;
@@ -79,6 +90,8 @@ img {
 	float: left;
 	padding: 10px;
 	margin: 20px;
+	margin-left: auto;
+	margin-right: auto;
 	background: #ffffff;
 	border: 5px solid #ccc;
 	width: 300px; /* ie5win fudge begins */
